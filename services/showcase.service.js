@@ -1,12 +1,12 @@
 
 // Gettign the Newly created Mongoose Model we just created
-var ToDo = require('../models/todo.model')
+var Showcase = require('../models/showcase.model')
 
 // Saving the context of this module inside the _the variable
 _this = this
 
 // Async function to get the To do List
-exports.getTodos = async function(query, page, limit){
+exports.getShowcases = async function(query, page, limit){
 
     // Options setup for the mongoose paginate
     var options = {
@@ -17,10 +17,10 @@ exports.getTodos = async function(query, page, limit){
     // Try Catch the awaited promise to handle the error
 
     try {
-        var todos = await ToDo.paginate(query, options)
+        var showcases = await Showcase.paginate(query, options)
 
         // Return the todod list that was retured by the mongoose promise
-        return todos;
+        return showcases;
 
     } catch (e) {
 
@@ -29,22 +29,22 @@ exports.getTodos = async function(query, page, limit){
     }
 }
 
-exports.createTodo = async function(todo){
+exports.createTodo = async function(showcase){
 
     // Creating a new Mongoose Object by using the new keyword
-    var newTodo = new ToDo({
-        title: todo.title,
-        description: todo.description,
+    var newShowcase = new Showcase({
+        title: showcase.title,
+        description: showcase.description,
         date: new Date(),
-        status: todo.status
+        status: showcase.status
     })
 
     try{
 
         // Saving the Todo
-        var savedTodo = await newTodo.save()
+        var savedShowcase = await newShowcase.save()
 
-        return savedTodo;
+        return savedShowcase;
     }catch(e){
 
         // return a Error message describing the reason
@@ -52,45 +52,50 @@ exports.createTodo = async function(todo){
     }
 }
 
-exports.updateTodo = async function(todo){
-    var id = todo.id
+exports.updateTodo = async function(showcase){
+    var id = showcase.id
 
     try{
         //Find the old Todo Object by the Id
 
-        var oldTodo = await ToDo.findById(id);
+        var oldShowcase = await Showcase.findById(id);
     }catch(e){
         throw Error("Error occured while Finding the Todo")
     }
 
     // If no old Todo Object exists return false
-    if(!oldTodo){
+    if(!oldShowcase
+
+
+
+
+    ){
         return false;
     }
 
-    console.log(oldTodo)
+    console.log(oldShowcase)
 
     //Edit the Todo Object
-    oldTodo.title = todo.title
-    oldTodo.description = todo.description
-    oldTodo.status = todo.status
+    oldShowcase.title = showcase.title
+    oldShowcase.description = showcase.description
+    oldShowcase.status = showcase.status
 
 
-    console.log(oldTodo)
+    console.log(oldShowcase)
 
     try{
-        var savedTodo = await oldTodo.save()
-        return savedTodo;
+        var savedShowcase = await oldShowcase.save()
+        return savedShowcase;
     }catch(e){
         throw Error("And Error occured while updating the Todo");
     }
 }
 
-exports.deleteTodo = async function(id){
+exports.deletedShowcase = async function(id){
 
     // Delete the Todo
     try{
-        var deleted = await ToDo.remove({_id: id})
+        var deleted = await Showcase.remove({_id: id})
         if(deleted.result.n === 0){
             throw Error("Todo Could not be deleted")
         }

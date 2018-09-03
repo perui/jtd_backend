@@ -1,7 +1,7 @@
 
 // Accessing the Service that we just created
 
-var showcaseCarouselService = require('../services/todo.service')
+var showcaseCarouselService = require('../services/showcase.service')
 
 // Saving the context of this module inside the _the variable
 
@@ -19,7 +19,7 @@ exports.getTodos = async function(req, res, next){
 
     try{
 
-        var todos = await showcaseCarouselService.getTodos({}, page, limit)
+        var todos = await showcaseCarouselService.getShowcases({}, page, limit)
 
         // Return the todos list with the appropriate HTTP Status Code and Message.
 
@@ -90,7 +90,7 @@ exports.removeTodo = async function(req, res, next){
     var id = req.params.id;
 
     try{
-        var deleted = await showcaseCarouselService.deleteTodo(id)
+        var deleted = await showcaseCarouselService.deletedShowcase(id)
         return res.status(204).json({status:204, message: "Succesfully Todo Deleted"})
     }catch(e){
         return res.status(400).json({status: 400, message: e.message})
